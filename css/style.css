@@ -1,0 +1,251 @@
+/*font face---------------------*/
+@font-face{
+    font-family: 'font-untuk-judul';
+    src: url('../font/kaushanscript-regular-webfont.woff2') format('woff2'),
+         url('../font/kaushanscript-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+/*font face----------xxx-----------*/
+
+/*Style Utama--------------------*/
+
+body{
+	font: 18px/36px 'Paytone One', sans-serif;
+	background-color: #ddd;
+
+}
+
+.judul{
+	text-align: center; 
+	margin: 50px 0;
+	font-size: 80px;
+	color: khaki;
+	text-shadow: 5px 5px 5px rgba(255, 0, 191,.3);
+}
+
+/*container-----------------------*/
+.container{
+	background-color: snow;
+	width: 600px;
+	margin: auto;
+	margin-top: 75px;
+	padding: 30px;
+	box-shadow: 0px 0px 5px 5px rgba(0,0,0,.3);
+	border-radius: 5px;
+}
+
+.galery li{
+	width: 120px;
+	height: 120px;
+	border:solid 5px #666;
+	float: left;
+	/*display: inline-block;
+		istan tapi nda tai knp harus pake float
+	*/
+	position: relative;
+	margin-right: 20px;
+}
+.lingkaran{
+	width: 120px;
+	height: 120px;
+}
+.galery li, .lingkaran, .galery li span{
+	border-radius: 50%;
+}
+.galery li span{
+	/*
+	karen display span itu inline = tidak bisa di atur width dan heightnya
+	maka kita perlu mengubahnya ke display block
+	*/
+	overflow: hidden;
+	display: block;
+	width: 120px;
+	height: 120px;
+	background-color: rgba(200,200,200,.5);
+	top: 0;
+	position: absolute;
+	text-align: center;
+	line-height: 120px;
+	color: #333;
+	text-shadow: 1px 1px 1px #ddd;
+	opacity: 0;
+	transition: .3s;
+		/*yang paling natural itu 300ms atau .3s
+		.3s itu transisinya 300ms itu delanya
+		*/
+	transform: scale(0);
+		/*di ke adaan walnya dia kecil dan tidak berputar*/
+	
+
+}
+.galery li a:hover span{
+	/*cara bacanya
+	ketika a yang di dalam disorot maka spannya akan solid
+	*/
+	opacity: 1;
+	/*biar lebih keren kita akan menambahkan animasi rotate*/
+	transform: scale(1) rotate(360deg);
+}
+.clear{
+	clear: both;
+}
+
+
+/*overlay-------------------------*/
+
+.overlay{
+	width: 0;
+	height: 0;
+	overflow: hidden;
+	position: fixed;
+		/*agar overlaynya tidak akan menggangu
+		apabila di scroll
+		*/
+	top: 0;
+	left: 0;
+	background: rgba(0,0,0,0);
+	z-index: 9999;
+	transition: .5s;
+	text-align: center;
+	padding: 100px 0;
+		/*ini berpengaruh*/
+}
+
+.overlay:target{
+	width: auto;
+	height: auto;
+	bottom: 0;
+	right: 0;
+	background-color: rgba(0,0,0,0.7);
+		/*membuat fade in dengan cara sederhana*/
+	/*	
+	so jadi konsep nya sebelum di target itu gambarnya masih belum saling tarik menarik
+	nah, setlah di target gambarnya akan tarik menarik. berubah menjadi 1 layar besar
+
+	*/
+}
+.overlay img{
+	max-height: 100%;
+	max-width: 100%;
+		/*max height ini apa bila browsernya di kecilkan, maka foto nya
+		akan selalu menjadi besar maksimal timgginya
+		*/
+	box-shadow: 2px 2px 8px 2px rgba(0,0,0,0.5);
+	border-radius: 10px;
+	
+
+}
+.overlay:target img{
+	animation: animGambar 1s;
+}
+
+
+.overlay .close{
+	position: absolute;
+		/*agar mudah di gerakan, dan pastikan parentnya sudah non static*/
+	top:45px;
+	left:50%;
+	/*tariknya pakai margin*/
+	margin-left: -30px;
+	color: snow;
+	text-decoration: none;
+	background-color: black;
+	border:solid 1px snow;
+	border-radius: 25px;
+	line-height: 14px;
+	padding: 5px 5px 10px 5px; 
+	opacity: 0;
+
+}
+
+.overlay:target .close{
+	/*cara bacanya : apabila overlaynya di target maka closenya*/
+	animation: slideDownFade .3s .5s forwards;
+}
+.overlay:target .next{
+	animation: rightFade .8s .5s forwards;
+}
+.overlay:target .prev{
+	animation: leftFade .8s .5s forwards;
+}
+
+/*pindah slide dengan panah--------*/
+.next, .prev{
+	width: 64px;
+	height: 64px;
+	background-image: url(../img/icon/001-next.png);
+	position: absolute;
+	filter: invert(1000);
+	top: 40%;
+	margin-left: 30px;
+	opacity: 0;
+}
+
+.prev{
+	background-image: url(../img/icon/002-previous.png);
+	margin-left: -100px;
+}
+
+
+/*ressize*/
+.resize{
+	width: 400px;
+	height: 800px;
+
+}
+
+/*animasi*/
+
+@keyframes animGambar{
+	from{
+		transform: scale(0);
+	}
+	to{
+		transform: scale(1);
+		opacity: 1;
+	}
+
+}
+
+@keyframes slideDownFade{
+	0%{
+		margin-top: -20px;
+	}
+	100%{
+		opacity: 1;
+		margin-top: 0;
+			/*kembali keposisi semula*/
+
+	}
+}
+
+
+@keyframes rightFade{
+	from{
+		margin-left: 15px;
+		opacity: 0;
+	}
+	to{
+		opacity: 1;
+		margin-left: 30px;
+	}
+}
+
+@keyframes leftFade{
+	from{
+		margin-left: -90px;
+		opacity: 0;
+	}
+	to{
+		margin-left: -100px;
+		opacity: 1;
+	}
+}
+
+
+
+
+
+
